@@ -130,6 +130,7 @@ view: f_lineitems {
     sql: ${l_extendedprice} ;;
     value_format_name: usd
   }
+
   measure: AverageSalePrice {
     label: "Average Sale Price"
     description: "Average sale price of items sold"
@@ -137,6 +138,7 @@ view: f_lineitems {
     sql: ${l_extendedprice} ;;
     value_format_name: usd
   }
+
   measure: CumulativeTotalSales {
     label: "Cumulative Total Sales"
     description: "Cumulative total sales from items sold (also known as a running total)"
@@ -144,4 +146,96 @@ view: f_lineitems {
     sql: ${l_extendedprice} ;;
     value_format_name: usd
   }
+
+  measure: SalesByAirMode {
+    label: "Total Sale Price Shipped By Air"
+    description: "Total sales of items shipped by air"
+    type:  sum
+    sql: ${l_extendedprice} ;;
+    filters: [l_shipmode: "AIR"]
+    value_format_name: usd
+  }
+
+  measure: TotalRussiaSales {
+    label: "Total Russia Sales"
+    description: "Total sales by customers from Russia"
+    type: sum
+    sql: ${l_extendedprice} ;;
+    filters: [d_customer.c_nation: "RUSSIA"]
+    value_format_name: usd
+  }
+
+  measure: GrossRevenue {
+    label: "Total Gross Revenue"
+    description: "Total price of completed sales"
+    type: sum
+    sql: ${l_extendedprice} ;;
+    filters: [l_orderstatus: "F"]
+    value_format_name: usd
+  }
+
+  measure: TotalCost {
+    label: "Total Cost"
+    type:  sum
+    sql: ${l_supplycost} ;;
+    value_format_name: usd
+  }
+
+  measure: GrossMargin {
+    label: "Total Gross Margin Amount"
+    type: number
+    sql: ${GrossRevenue}-${TotalCost} ;;
+    value_format_name: usd
+  }
+
+  measure: GrossMarginPercentage {
+    label: "Gross Margin Percentage"
+    description: "Total Gross Margin Amount/Total Gross Revenue"
+    sql: ${GrossMargin}/(NULLIF(${GrossRevenue},0) ;;
+    value_format_name: percent_1
+  }
+
+  dimension: ItemIsReturned {
+    type: yesno
+    sql: ${l_returnflag}='R' ;;
+  }
+  measure: ItemsReturned {
+    label: "Number of Items Returned"
+    description: "Number of items that were returned by dissatisfied customers"
+    type: sum
+    sql: ${l_quantity} ;;
+    filters: [ItemIsReturned: "yes"]
+  }
+
+  measure: ItemsSold {
+    label: "Total Number of Items Sold"
+    description: "Number of items that were sold"
+    type: sum
+    sql: ${l_quantity} ;;
+    value_format_name: id
+  }
+
+  measure: ReturnRate {
+    label: "Item Return Rate"
+    description: "Number Of Items Returned / Total Number Of Items Sold"
+    sql: ${ItemIsReturned}/(NULLIF(${ItemsSold},0) ;;
+    type: number
+    value_format_name: percent_1
+  }
+
+  measure: CustomerCount {
+    label: "Customer Count"
+    description: "Distinct count of customers made a purchase"
+    sql: ${l_custkey} ;;
+    type: count_distinct
+  }
+
+  measure: SpendPerCustomer {
+    label: "Average Spend per Customer"
+    description: "Total Sale Price / Total Number of Customers"
+    sql: ${TotalSalePrice}/(NULLIF(${CustomerCount},0);;
+    type: number
+    value_format_name: usd
+  }
+
 }
