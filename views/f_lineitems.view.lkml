@@ -118,6 +118,17 @@ view: f_lineitems {
     sql: ${TABLE}."L_TOTALPRICE" ;;
   }
 
+  dimension: supplier_link {
+    label: "Google link to supplier web page"
+    type: string
+    sql: ${TABLE}.'S_NAME' ;;
+    link: {
+      label: "Google"
+      url: "http://www.google.com/search?q={{ value }}"
+      icon_url: "http://www.google.com/favicon.ico"
+    }
+  }
+
   measure: count {
     type: count
     drill_fields: []
@@ -245,5 +256,6 @@ view: f_lineitems {
     type: number
     value_format_name: usd
   }
+
 
 }
