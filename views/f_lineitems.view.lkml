@@ -121,7 +121,7 @@ view: f_lineitems {
   dimension: supplier_link {
     label: "Google link to supplier web page"
     type: string
-    sql: ${TABLE}.'S_NAME' ;;
+    sql: ${TABLE}."S_NAME" ;;
     link: {
       label: "Google"
       url: "http://www.google.com/search?q={{ value }}"
