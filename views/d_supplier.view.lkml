@@ -45,6 +45,18 @@ view: d_supplier {
     tiers: [1,3001,5001,7001]
     sql: ${s_acctbal} ;;
   }
+
+  dimension: supplier_link {
+    label: "Google link to supplier web page"
+    type: string
+    sql: ${TABLE}."S_NAME" ;;
+    link: {
+      label: "Google"
+      url: "http://www.google.com/search?q={{ value }}"
+      icon_url: "http://www.google.com/favicon.ico"
+    }
+  }
+
   measure: count {
     type: count
     drill_fields: [s_name]
