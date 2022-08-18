@@ -188,6 +188,14 @@ view: f_lineitems {
     value_format_name: usd
   }
 
+  measure: GrossMarginDrill {
+    label: "Total Gross Margin Amount Drill"
+    type: number
+    drill_fields: [d_supplier.s_name, d_supplier.suppliers_tiers, d_supplier.s_nation, d_supplier.s_region]
+    sql: ${GrossRevenue}-${TotalCost} ;;
+    value_format_name: usd
+  }
+
   measure: GrossMarginPercentage {
     label: "Gross Margin Percentage"
     description: "Total Gross Margin Amount/Total Gross Revenue"
