@@ -37,6 +37,7 @@ view: d_supplier {
     primary_key: yes
     sql: ${TABLE}."S_SUPPKEY" ;;
   }
+
   dimension: SupplierGroup {
     label: "Cohort of suppliers"
     description: "Cohort of suppliers according to Account Balance"
