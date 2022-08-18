@@ -169,7 +169,7 @@ view: f_lineitems {
     label: "Total Gross Revenue"
     description: "Total price of completed sales"
     type: sum
-    sql: ${l_extendedprice} ;;
+    sql: ${l_totalprice} ;;
     filters: [l_orderstatus: "F"]
     value_format_name: usd
   }
@@ -191,7 +191,7 @@ view: f_lineitems {
   measure: GrossMarginPercentage {
     label: "Gross Margin Percentage"
     description: "Total Gross Margin Amount/Total Gross Revenue"
-    sql: (1.0*${GrossMargin})/(NULLIF(${GrossRevenue},0) ;;
+    sql: (1.0*${GrossMargin})/NULLIF(${GrossRevenue},0) ;;
     value_format_name: percent_1
   }
 
