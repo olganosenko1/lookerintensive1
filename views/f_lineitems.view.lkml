@@ -208,6 +208,7 @@ view: f_lineitems {
     type: yesno
     sql: ${l_returnflag}='R' ;;
   }
+
   measure: ItemsReturned {
     label: "Number of Items Returned"
     description: "Number of items that were returned by dissatisfied customers"
